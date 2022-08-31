@@ -60,4 +60,12 @@ function newElement() {
   }
 
 
+function myTime(){
+    var d = new Date();
+    var n = d.toLocaleTimeString();
+    document.getElementById("p1").textContent = n;
+
+}
+
+setInterval(myTime, 1000);
 
