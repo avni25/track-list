@@ -133,17 +133,21 @@ const gen = setInterval(function(){
     var hour = l[i].textContent.split(" ")[2].substring(0,5).split(":")[0];
     var min = l[i].textContent.split(" ")[2].substring(0,5).split(":")[1];
     var w = new Date();
+    var now = new Date();
+    now.setMinutes(now.getMinutes()+timeDiff);
     w.setHours(parseInt(hour))
-    w.setMinutes(parseInt(min) + timeDiff)
-    w.setSeconds(00)
-    var diff =Math.abs(new Date() > w) 
-    console.log(diff);
-    if(!timeDiff){
+    w.setMinutes(parseInt(min))
+    // w.setSeconds(00)
+    w.setMinutes(w.getMinutes())
+    var diff = now > w
+    console.log(new Date());
+    // console.log(w);
+    if(diff && l[i].className != "checked"){
       // l[i].style.backgroundColor = red
       blinkRow(l[i], "red")
     }
   }
-}, 400) 
+}, 300) 
 
 
 
