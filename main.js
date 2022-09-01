@@ -111,7 +111,7 @@ function myTime(){
 
 }
 
-function flashtext(ele,col) {
+function blinkRow(ele,col) {
   var tmpColCheck = ele.style.backgroundColor;
   
     if (tmpColCheck === 'silver') {
@@ -125,7 +125,7 @@ function flashtext(ele,col) {
 
 setInterval(myTime, 1000);
 
-function draft(){
+const gen = setInterval(function(){
   
   var l = document.getElementById("myUL").getElementsByTagName("li");
   
@@ -138,6 +138,14 @@ function draft(){
     w.setSeconds(00)
     var diff =Math.abs(new Date() > w) 
     console.log(diff);
-     
+    if(!timeDiff){
+      // l[i].style.backgroundColor = red
+      blinkRow(l[i], "red")
+    }
   }
-}
+}, 400) 
+
+
+
+
+
