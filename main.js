@@ -140,11 +140,13 @@ const gen = setInterval(function(){
     // w.setSeconds(00)
     w.setMinutes(w.getMinutes())
     var diff = now > w
-    console.log(new Date());
+    // console.log(new Date());
     // console.log(w);
     if(diff && l[i].className != "checked"){
       // l[i].style.backgroundColor = red
       blinkRow(l[i], "red")
+    }else if(l[i].className == "checked"){
+      l[i].style.backgroundColor = "#888"
     }
   }
 }, 300) 

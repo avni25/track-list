@@ -1,12 +1,16 @@
 /* Include the padding and border in an element's total width and height */
-* {
+
+/* * {
     box-sizing: border-box;
+  } */
+  body{
+    background-color: #262627;
   }
-  
   /* Remove margins and padding from the list */
   ul {
     margin: 0;
     padding: 0;
+    width: 550px;
   }
   
   /* Style the list items */
@@ -73,9 +77,10 @@
   /* Style the header */
   .header {
     background-color: #1b1a20;
-    padding: 30px 40px;
+    padding: 10px;
     color: white;
     text-align: center;
+    width: 550px;
   }
   
   /* Clear floats after the header */
@@ -87,10 +92,10 @@
   
   /* Style the input */
   input {
-    margin: 0;
+    margin: 2px;
     border: none;
     border-radius: 0;
-    width: 75%;
+    width: 20%;
     padding: 10px;
     float: left;
     font-size: 16px;
@@ -110,15 +115,16 @@
     border-radius: 0;
   }
   
-  .addBtn:hover {
+.addBtn:hover {
     background-color: #bbb;
-  }
-
-#inputs{
-    
-    display: inline-block;
 }
 
-  #p1{
+#p1{
     color: white;
-  }
+    margin: 0px;
+}
+
+#parkno, #myInput{
+  width: 15%;
+}
+
