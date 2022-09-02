@@ -14,24 +14,28 @@
     <div id="myDIV" class="header">
         <div id="time" >
             <p id="p1">asd</p>
-        </div>
-        <h2>Track List</h2>
-        <div class="inputs">
-            <div><input type="text" id="myInput" placeholder="flight no..."></div>
-            <div><input type="text" id="parkno" placeholder="park no"></div>
-            <div><input type="time" id="eta" name="eta" placeholder="eta"></div>
-            <div><button onclick="newElement()" class="addBtn">Add</button></div>
+            </div>
+                <h2>Track List</h2>
+                <div class="inputs">
+                    <div><input type="text" id="myInput" placeholder="flight no..."></div>
+                    <div><input type="text" id="parkno" placeholder="park no"></div>
+                    <div><input type="time" id="eta" name="eta" placeholder="eta"></div>
+                    <div><button onclick="newElement()" class="addBtn">Add</button></div>
+                    
+                </div>
+                <button onclick="draft()" class="draft">Add</button>
+            </div>
+        <label for="minutes">Time difference(minute)</label>
+        <select id="difference">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15" selected="True">15</option>
+            <option value="20">20</option>
+        </select>
+        <ul id="myUL">
             
-        </div>
-        
-      </div>
-      
-      <ul id="myUL">
-        <li>THY4578 114B 19:00</li>
-        <li class="checked">SXS4569 103 18:35</li>
-        <li>MLD757 121 18:05</li>
-        
-      </ul>
+            
+        </ul>
 </body>
 <script src="main.js"></script>
 </html>

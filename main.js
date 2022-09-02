@@ -1,28 +1,29 @@
 
-var timeDiff = 15
-
+var timeDiff = 15;
+var tracks = [];
 
 // Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
+// var myNodelist = document.getElementsByTagName("LI");
+// var i;
+// for (i = 0; i < myNodelist.length; i++) {
+//   var span = document.createElement("SPAN");
+//   var txt = document.createTextNode("\u00D7");
+//   span.className = "close";
+//   span.appendChild(txt);
+//   myNodelist[i].appendChild(span);
+// }
 
 
 // Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
+// var close = document.getElementsByClassName("close");
+// var i;
+// for (i = 0; i < close.length; i++) {
+//   close[i].onclick = function() {
+//     var div = this.parentElement;
+//     div.style.display = "none";   
+     
+//   }
+// }
 
 
 
@@ -42,8 +43,14 @@ function newElement() {
     var parkno = document.getElementById("parkno").value;
     var eta = document.getElementById("eta").value;
     var str = inputValue + " " + parkno + " "+ eta;
-    
-    console.log(str)
+    var obj = {
+            flightno: inputValue, 
+            parkno: parkno, 
+            eta: eta, 
+            isread: 0
+          };
+    tracks.push(0); 
+    // console.log(obj);
     var t = document.createTextNode(str.toUpperCase());
     li.appendChild(t);
     if (inputValue === '') {
@@ -58,50 +65,39 @@ function newElement() {
     span.className = "close";
     span.appendChild(txt);
     li.appendChild(span);
-  
+    var close = document.getElementsByClassName("close");
+    console.log("tracks: "+tracks.length + " : closes: "+ close.length);
     for (i = 0; i < close.length; i++) {
       close[i].onclick = function() {
         var div = this.parentElement;
         div.style.display = "none";
+        
       }
     }
 }
 
-function readNumber(num){    
-    var a = num%10;
-    var b = Math.floor(num/10);
-    var sa = new Audio("./sounds/"+a+".mp3");
-    var sb = new Audio("./sounds/"+b+".mp3");
-    sb.play();
-    setTimeout(() => {
-        sa.play();
-    }, 700);
+
+function playAudio(audio){
+  return new Promise(res=>{
+    audio.play()
+    audio.onended = res
+  })
 }
 
-function readPark(str){
-  var ch = str.split("");
-  var sec = 500;
+async function readPark(str){
+  var ch = str.split("");  
   for (let index = 0; index < ch.length; index++) {
-      
-      setTimeout(()=>{
-          var s = new Audio("./sounds/"+ch[index]+".mp3");
-          console.log(ch[index]);
-          s.play();
-      }, sec);
-      sec += 500;
+    var s = new Audio("./sounds/"+ch[index]+".mp3");
+    await playAudio(s); 
   }  
 }
 
-function readWarningFor(str){
+async function readWarningFor(str){
   var sa = new Audio("./sounds/warning.mp3");
   var sb = new Audio("./sounds/conflict.mp3");
-  sa.play();
-  setTimeout(() => {
-      sb.play();
-  }, 1000);
-  setTimeout(() => {
-     readPark(str);
-  }, 3000);
+  await playAudio(sa);
+  await playAudio(sb);
+  await readPark(str)
 }
 
 function myTime(){
@@ -121,35 +117,47 @@ function blinkRow(ele,col) {
     }
 } 
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function draft(){
+  // await readPark("231b");
+  console.log(tracks);
+}
+
 //--------------------------INTERVALS---------------------------
 
 setInterval(myTime, 1000);
 
-const gen = setInterval(function(){
-  
-  var l = document.getElementById("myUL").getElementsByTagName("li");
-  
-  for(var i = 0; i < l.length; i++){
-    var hour = l[i].textContent.split(" ")[2].substring(0,5).split(":")[0];
-    var min = l[i].textContent.split(" ")[2].substring(0,5).split(":")[1];
-    var w = new Date();
-    var now = new Date();
-    now.setMinutes(now.getMinutes()+timeDiff);
-    w.setHours(parseInt(hour))
-    w.setMinutes(parseInt(min))
-    // w.setSeconds(00)
-    w.setMinutes(w.getMinutes())
-    var diff = now > w
-    // console.log(new Date());
-    // console.log(w);
-    if(diff && l[i].className != "checked"){
-      // l[i].style.backgroundColor = red
-      blinkRow(l[i], "red")
-    }else if(l[i].className == "checked"){
-      l[i].style.backgroundColor = "#888"
+const gen = setInterval(async function(){
+    var l = document.getElementById("myUL").getElementsByTagName("li");
+    timeDiff =parseInt(document.getElementById("difference").value);
+    for(var i = 0; i < l.length; i++){
+      var hour = l[i].textContent.split(" ")[2].substring(0,5).split(":")[0];
+      var min = l[i].textContent.split(" ")[2].substring(0,5).split(":")[1];
+      var parkno = l[i].textContent.split(" ")[1];
+      var w = new Date();
+      var now = new Date();
+      now.setMinutes(now.getMinutes()+timeDiff);
+      w.setHours(parseInt(hour))
+      w.setMinutes(parseInt(min))
+      w.setMinutes(w.getMinutes())
+      var diff = now >= w
+      if(diff && l[i].className != "checked" ){
+        // l[i].style.backgroundColor = red
+        blinkRow(l[i], "red");
+          if(tracks[i] == 0){
+            readWarningFor(parkno);
+            tracks[i] = 1;
+          }
+        
+      }else {
+        l[i].style.backgroundColor = "#888"
+      }
     }
-  }
-}, 300) 
+  
+}, 500);
 
 
 
