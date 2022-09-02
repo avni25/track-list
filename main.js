@@ -52,11 +52,7 @@ function newElement() {
     tracks.push(0); 
     var t = document.createTextNode(str.toUpperCase());
     li.appendChild(t);
-    if (inputValue === '') {
-      alert("You must write something!");
-    } else {
-      document.getElementById("myUL").appendChild(li);
-    }
+    document.getElementById("myUL").appendChild(li);
     document.getElementById("myInput").value = "";
   
     var span = document.createElement("SPAN");
