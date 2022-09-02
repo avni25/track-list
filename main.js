@@ -150,7 +150,7 @@ const gen = setInterval(async function(){
       }
     }
   
-}, 500);
+}, 300);
 
 
 
