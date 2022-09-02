@@ -1,6 +1,9 @@
 
 var timeDiff = 15;
+var blinkrate = 300;
 var tracks = [];
+
+
 
 // Create a "close" button and append it to each list item
 // var myNodelist = document.getElementsByTagName("LI");
@@ -150,7 +153,7 @@ const gen = setInterval(async function(){
       }
     }
   
-}, 300);
+}, blinkrate);
 
 
 
