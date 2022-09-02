@@ -2,7 +2,7 @@
 var timeDiff = 15;
 var blinkrate = 300;
 var tracks = [];
-
+var soundCheckBox = document.getElementById("soundCheck");
 
 
 // Create a "close" button and append it to each list item
@@ -141,12 +141,11 @@ const gen = setInterval(async function(){
       w.setMinutes(w.getMinutes())
       var diff = now >= w
       if(diff && l[i].className != "checked" ){
-        // l[i].style.backgroundColor = red
         blinkRow(l[i], "red");
-          if(tracks[i] == 0){
-            readWarningFor(parkno);
-            tracks[i] = 1;
-          }
+        if(tracks[i] == 0 && soundCheckBox.checked){
+          readWarningFor(parkno);
+          tracks[i] = 1;
+        }
         
       }else {
         l[i].style.backgroundColor = "#888"
