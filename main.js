@@ -43,14 +43,8 @@ function newElement() {
     var parkno = document.getElementById("parkno").value;
     var eta = document.getElementById("eta").value;
     var str = inputValue + " " + parkno + " "+ eta;
-    var obj = {
-            flightno: inputValue, 
-            parkno: parkno, 
-            eta: eta, 
-            isread: 0
-          };
+    
     tracks.push(0); 
-    // console.log(obj);
     var t = document.createTextNode(str.toUpperCase());
     li.appendChild(t);
     if (inputValue === '') {
@@ -122,7 +116,6 @@ function sleep(ms) {
 }
 
 async function draft(){
-  // await readPark("231b");
   console.log(tracks);
 }
 
