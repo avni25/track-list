@@ -115,6 +115,8 @@
     cursor: pointer;
     transition: 0.3s;
     border-radius: 0;
+    background-color: #2196F3;
+    color:rgb(226, 234, 235);
   }
   
 .addBtn:hover {
